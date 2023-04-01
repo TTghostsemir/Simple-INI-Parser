@@ -1,6 +1,6 @@
 /*
  * Simple INI Parser
- * Copyright (c) 2021 Nichole Mattera
+ * Copyright (c) 2022 Nichole Mattera
  * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above 
@@ -17,15 +17,27 @@
 
 #pragma once
 
+#include <any>
 #include <string>
+#include <variant>
+#include <vector>
 
-#include "IniOption.hpp"
-#include "IniSection.hpp"
+#include "option.hpp"
 
-namespace simpleIniParser {
-    class IniHelper {
+namespace sini {
+
+    class Section {
         public:
-            static bool findOption(const IniOption * obj, std::string term, bool caseSensitive, IniOptionType type, IniOptionSearchField field);
-            static bool findSection(const IniSection * obj, std::string term, bool caseSensitive, IniSectionType type);
+            Option operator[](size_t index);
+            std::vector<Option> getOptions(const std::string &key);
+
+        private:
+            std::vector<Option> m_options;
+    
     };
+
+    Option CreateSection(const std::string &name) {
+        return Option(OptionType::Section, name, Section());
+    }
+
 }

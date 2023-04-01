@@ -1,6 +1,6 @@
 /*
  * Simple INI Parser
- * Copyright (c) 2021 Nichole Mattera
+ * Copyright (c) 2022 Nichole Mattera
  * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above 
@@ -15,23 +15,27 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#pragma once
+#include <algorithm>
+#include <stdexcept>
 
-#include <string>
+#include <sini.hpp>
 
-namespace simpleIniParser {
-    class IniStringHelper {
-        public:
-            static void toupper(std::string &s);
-            static std::string toupper_copy(std::string s);
+namespace sini {
+    Option Section::operator[](size_t index) {
+        if (index >= m_options.size()) {
+            throw std::out_of_range("Index out of range");
+        }
 
-            // Start of Source from https://stackoverflow.com/questions/216823
-            static void ltrim(std::string &s);
-            static void rtrim(std::string &s);
-            static void trim(std::string &s);
-            static std::string ltrim_copy(std::string s);
-            static std::string rtrim_copy(std::string s);
-            static std::string trim_copy(std::string s);
-            // End
-    };
+        return m_options[index];
+    }
+    
+    std::vector<Option> Section::getOptions(const std::string &key) {
+        std::vector<Option> matchOptions;
+
+        std::ranges::copy_if(m_options,
+            std::back_inserter(matchOptions),
+            [&](Option option) { return option.key == key; });
+
+        return matchOptions;
+    }
 }

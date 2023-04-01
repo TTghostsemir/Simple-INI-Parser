@@ -1,6 +1,6 @@
 /*
  * Simple INI Parser
- * Copyright (c) 2021 Nichole Mattera
+ * Copyright (c) 2022 Nichole Mattera
  * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above 
@@ -15,8 +15,26 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "SimpleIniParser/Ini.hpp"
-#include "SimpleIniParser/IniHelper.hpp"
-#include "SimpleIniParser/IniSection.hpp"
-#include "SimpleIniParser/IniOption.hpp"
-#include "SimpleIniParser/IniStringHelper.hpp"
+#pragma once
+
+#include <string>
+
+namespace sini {
+
+    class Ini {
+        public:
+            static Ini ParseFile(const std::string &path);
+            static inline Ini ParseData(const std::string &data) {
+                return Ini(data);
+            }
+
+            Ini() = default;
+
+            std::string magic;
+
+        private:
+            Ini(const std::string &data);
+
+    };
+
+}

@@ -1,6 +1,6 @@
 /*
  * Simple INI Parser
- * Copyright (c) 2021 Nichole Mattera
+ * Copyright (c) 2022 Nichole Mattera
  * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above 
@@ -15,31 +15,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#pragma once
+#include <sini.hpp>
 
-#include <string>
+namespace sini {
 
-namespace simpleIniParser {
-    enum class IniOptionType {
-        Any,
-        Option,
-        SemicolonComment,
-        HashtagComment,
-    };
-
-    enum class IniOptionSearchField {
-        Key,
-        Value
-    };
-
-    class IniOption {
-        public:
-            IniOptionType type;
-            std::string key;
-            std::string value;
-
-            IniOption(IniOptionType type, std::string key, std::string val);
-            std::string build();
-            static IniOption * parse(std::string line);
-    };
 }
